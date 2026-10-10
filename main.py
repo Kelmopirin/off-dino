@@ -4,6 +4,7 @@ width, heigth=800,600
 screen = pygame.display.set_mode((width,heigth))
 
 dino=Dino()
+dino.load_sprite("pics/dino.png")
 running = True
 while running:
     for event in pygame.event.get():
@@ -15,7 +16,7 @@ while running:
     screen.fill((255,255,255))
     dino.draw(screen)
     pygame.display.flip()
-    
+
     dino.update()
 
 pygame.quit()
