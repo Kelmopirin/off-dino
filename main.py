@@ -6,6 +6,7 @@ screen = pygame.display.set_mode((width,heigth))
 dino=Dino()
 dino.load_sprite("pics/dino.png")
 running = True
+clock = pygame.time.Clock()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -16,7 +17,8 @@ while running:
     screen.fill((255,255,255))
     dino.draw(screen)
     pygame.display.flip()
+    dt = clock.tick(60)
+    dino.update(dt)
 
-    dino.update()
 
 pygame.quit()
