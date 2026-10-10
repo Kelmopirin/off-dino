@@ -7,14 +7,15 @@ class Dino:
         self.color = (0, 255, 0)
         self.ySpeed=0
         self.sprite=None
-        self.animationTime=500
+        self.animationTime=300
         self.currentTime=0
         self.currentSprite="pics/dino.png"
 
     def draw(self, screen):
             screen.blit(self.sprite.image, (800*0.2, self.y))
     def jump(self):
-        self.ySpeed=-2
+        if self.y==300:
+            self.ySpeed=-2
     def update(self,dt):
         self.y+=self.ySpeed*dt
         self.ySpeed+=0.01*dt
