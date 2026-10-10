@@ -13,7 +13,7 @@ class Dino:
         self.ySpeed=-3
     def update(self):
         self.y+=self.ySpeed
-        self.ySpeed+=0.1
+        self.ySpeed+=0.03
         if self.y>=300:
             self.y=300
             self.ySpeed=0
