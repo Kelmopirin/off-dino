@@ -18,8 +18,8 @@ while running:
             if event.key==pygame.K_SPACE:
                 dino.jump()
     screen.fill((255,255,255))
-    dino.draw(screen)
-    cactus.draw(screen)
+    dino.draw(screen,True)
+    cactus.draw(screen,True)
     pygame.display.flip()
     dt = clock.tick(60)
     dino.update(dt)

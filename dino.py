@@ -2,8 +2,8 @@ import pygame
 class Dino:
     def __init__(self):
         self.y = 300
-        self.width = 50
-        self.height = 50
+        self.width = 80
+        self.height = 80
         self.ySpeed=0
         self.sprite=None
         self.animationTime=300
