@@ -4,15 +4,16 @@ class Dino:
         self.y = 300
         self.width = 50
         self.height = 50
-        self.color = (0, 255, 0)
         self.ySpeed=0
         self.sprite=None
         self.animationTime=300
         self.currentTime=0
         self.currentSprite="pics/dino.png"
 
-    def draw(self, screen):
+    def draw(self, screen, hitbox=False):
             screen.blit(self.sprite.image, (800*0.2, self.y))
+            if hitbox:
+                pygame.draw.rect(screen, (255, 0, 0), (800*0.2, self.y, self.width, self.height), 2)
     def jump(self):
         if self.y==300:
             self.ySpeed=-2
