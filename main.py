@@ -20,9 +20,12 @@ while running:
     screen.fill((255,255,255))
     dino.draw(screen,True)
     cactus.draw(screen,True)
+    pygame.draw.line(screen, (80,80,80), (0, 300 + cactus.height), (width, 300 + cactus.height), 2)
     pygame.display.flip()
     dt = clock.tick(60)
     dino.update(dt)
-
+    cactus.update(dt)
+    dino.collide(cactus)
+    cactus.increase_speed(0.001)
 
 pygame.quit()
