@@ -3,7 +3,7 @@ import random
 import pygame
 
 from AIDino import AIDino
-from cactus import Cactus
+from obstacles import ObstacleCourse
 
 
 WIDTH, HEIGHT = 800, 600
@@ -47,7 +47,7 @@ def main():
     clock = pygame.time.Clock()
 
     population = create_population()
-    cactus = Cactus(scale=CACTUS_SCALE)
+    course = ObstacleCourse(WIDTH, DINO_SCALE, CACTUS_SCALE)
     generation = 1
     best_fitness = 0.0
     running = True
@@ -58,15 +58,15 @@ def main():
                 running = False
 
         dt = clock.tick(60)
-        cactus.update(dt)
+        course.update(dt)
         for dino in population:
-            dino.update(cactus, dt, WIDTH)
+            dino.update(course.current, course.speed, dt, WIDTH)
 
         if not any(dino.alive for dino in population):
             best_fitness = max(best_fitness, max(dino.fitness for dino in population))
             population = create_population(population)
-            cactus.x = WIDTH
-            cactus.increase_speed(0.03)
+            course.reset()
+            course.increase_speed(0.03)
             generation += 1
 
         screen.fill((255, 255, 255))
@@ -97,7 +97,7 @@ def main():
             )
             screen.blit(label, (8, round(lane_top + 3)))
             dino.dino.draw(screen, hitbox=True)
-            cactus.draw(screen, hitbox=True, y=dino.dino.ground_y)
+            course.current.draw(screen, hitbox=True, y=dino.dino.ground_y)
 
         pygame.display.flip()
 

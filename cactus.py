@@ -5,15 +5,16 @@ class Cactus:
         self.scale = scale
         self.width = round(50 * scale)
         self.height = round(85 * scale)
-        self.xSpeed = -0.5
+        self.y_offset = 0
+        self.speed_factor = 1.0
         self.sprite = None
         self.currentSprite = "pics/cactus.png"
         self.load_sprite(self.currentSprite)
     
     def draw(self, screen, hitbox=False, y=300):
-        screen.blit(self.sprite.image, (self.x, y))
+        screen.blit(self.sprite.image, (self.x, y + self.y_offset))
         if hitbox:
-            pygame.draw.rect(screen, (0, 160, 0), (self.x, y, self.width, self.height), 1)
+            pygame.draw.rect(screen, (0, 160, 0), (self.x, y + self.y_offset, self.width, self.height), 1)
 
     def load_sprite(self, path):
         self.sprite = pygame.sprite.Sprite()
@@ -23,10 +24,5 @@ class Cactus:
             image = pygame.transform.scale(image, size)
         self.sprite.image = image
 
-    def update(self, dt):
-        self.x += self.xSpeed * dt
-        if self.x + self.width < 0:
-            self.x = 800
-
-    def increase_speed(self, amount):
-        self.xSpeed = max(-1.5, self.xSpeed - amount)
+    def update(self, dt, speed):
+        self.x += speed * self.speed_factor * dt

@@ -6,30 +6,38 @@ class AIDino:
     def __init__(self, x=110, ground_y=300, scale=1.0):
         self.dino = Dino(x=x, ground_y=ground_y, scale=scale)
         self.dino.load_sprite("pics/dino.png")
-        self.nn = NeuralNetwork([3, 6, 1])
+        self.dino.load_duck_sprite("pics/Chrome_T-Rex_Left_Duck.png")
+        self.nn = NeuralNetwork([6, 8, 2])
         self.alive = True
         self.fitness = 0.0
 
     def predict(self, inputs):
         return self.nn.predict(inputs)
 
-    def update(self, cactus, dt, screen_width):
+    def update(self, obstacle, speed, dt, screen_width):
         if not self.alive:
             return
 
-        distance = max(0, cactus.x - (self.dino.x + self.dino.width))
+        distance = max(0, obstacle.x - (self.dino.x + self.dino.width))
         height = max(0, self.dino.ground_y - self.dino.y)
         vertical_speed = max(-1.5, min(1.5, self.dino.ySpeed)) / 1.5
         inputs = [
             min(1.0, distance / screen_width),
+            obstacle.y_offset / 50.0,
+            (obstacle.y_offset + obstacle.height) / 50.0,
             min(1.0, height / 150.0),
             vertical_speed,
+            abs(speed * obstacle.speed_factor) / 1.5,
         ]
-        if self.predict(inputs)[0] > 0.5:
+        jump, duck = self.predict(inputs)
+        if jump > 0.5:
+            self.dino.duck(False)
             self.dino.jump()
+        else:
+            self.dino.duck(duck > 0.5)
 
         self.dino.update(dt)
-        if self.dino.collide(cactus):
+        if self.dino.collide(obstacle):
             self.alive = False
         else:
             self.fitness += dt / 1000.0
