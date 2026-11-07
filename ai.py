@@ -54,7 +54,7 @@ class NeuralNetwork:
         clone.biases = [list(layer) for layer in self.biases]
         return clone
 
-    def crossover(self, other, mutation_rate=0.1, mutation_strength=0.5):
+    def crossover(self, other, mutation_rate=0.25, mutation_strength=0.9):
         if self.layers != other.layers:
             raise ValueError("Csak azonos felépítésű hálók keresztezhetők.")
 
